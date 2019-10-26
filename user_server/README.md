@@ -1,11 +1,11 @@
-# Server Service
+# User_server Service
 
-This is the Server service
+This is the User_server service
 
 Generated with
 
 ```
-micro new myproject/server --namespace=go.micro --type=web
+micro new myproject/user_server --namespace=go.micro --type=srv
 ```
 
 ## Getting Started
@@ -16,9 +16,9 @@ micro new myproject/server --namespace=go.micro --type=web
 
 ## Configuration
 
-- FQDN: go.micro.web.server
-- Type: web
-- Alias: server
+- FQDN: go.micro.srv.user_server
+- Type: srv
+- Alias: user_server
 
 ## Dependencies
 
@@ -44,7 +44,7 @@ make build
 
 Run the service
 ```
-./server-web
+./user_server-srv
 ```
 
 Build a docker image
