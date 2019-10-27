@@ -2,6 +2,8 @@ package handler
 
 import (
 	"context"
+	"fmt"
+	"github.com/astaxie/beego/orm"
 
 	"github.com/micro/go-log"
 
@@ -12,6 +14,13 @@ type Example struct{}
 
 // Call is a single request handler called via client.Call or the generated client code
 func (e *Example) Call(ctx context.Context, req *example.Request, rsp *example.Response) error {
+
+
+	o := orm.NewOrm()
+	var v []orm.Params
+	_,err := o.QueryTable("user").Values(&v)
+	fmt.Println(err)
+	fmt.Println(v)
 	log.Log("Received Example.Call request")
 	rsp.Msg = "Hello " + req.Name
 	return nil

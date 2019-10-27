@@ -8,6 +8,7 @@ import (
 	"myproject/user_server/handler"
 	"myproject/user_server/subscriber"
 
+	_ "myproject/models"
 	example "myproject/user_server/proto/example"
 )
 
