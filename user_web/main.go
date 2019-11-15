@@ -1,11 +1,13 @@
 package main
 
 import (
+        "github.com/astaxie/beego/logs"
         "github.com/micro/go-log"
-	"net/http"
+        "net/http"
 
         "github.com/micro/go-web"
         "myproject/user_web/handler"
+        _ "myproject/utils"
 )
 
 func main() {
@@ -15,7 +17,7 @@ func main() {
                 web.Version("latest"),
                 web.Address("127.0.0.1:8080"),
         )
-
+        logs.Error("web test Error")
 	// initialise service
         if err := service.Init(); err != nil {
                 log.Fatal(err)

@@ -18,7 +18,7 @@ func (e *Example) Call(ctx context.Context, req *example.Request, rsp *example.R
 
 	o := orm.NewOrm()
 	var v []orm.Params
-	_,err := o.QueryTable("user").Values(&v)
+	_,err := o.QueryTable("rabc_user").Values(&v)
 	fmt.Println(err)
 	fmt.Println(v)
 	log.Log("Received Example.Call request")

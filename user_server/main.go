@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
+	"github.com/astaxie/beego/logs"
 	"github.com/micro/go-grpc"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
-	"myproject/user_server/handler"
-	"myproject/user_server/subscriber"
-
 	_ "myproject/models"
+	"myproject/user_server/handler"
 	example "myproject/user_server/proto/example"
+	"myproject/user_server/subscriber"
+	_ "myproject/utils"
 )
 
 func main() {
@@ -22,7 +23,7 @@ func main() {
 
 	// Initialise service
 	service.Init()
-
+	logs.Error("server test Error")
 	// Register Handler
 	err := example.RegisterExampleHandler(service.Server(), new(handler.Example))
 	fmt.Println(err)
