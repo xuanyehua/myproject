@@ -29,6 +29,9 @@ func main() {
 	// register call handler
 	service.HandleFunc("/example/call", handler.ExampleCall)
 
+	service.HandleFunc("/get_img", handler.ImageCall)
+
+
 	// run service
         if err := service.Run(); err != nil {
                 log.Fatal(err)

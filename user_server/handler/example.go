@@ -10,11 +10,11 @@ import (
 	example "myproject/user_server/proto/example"
 )
 
+
 type Example struct{}
 
 // Call is a single request handler called via client.Call or the generated client code
 func (e *Example) Call(ctx context.Context, req *example.Request, rsp *example.Response) error {
-
 
 	o := orm.NewOrm()
 	var v []orm.Params

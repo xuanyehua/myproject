@@ -35,3 +35,6 @@ message Ping {
 message Pong {
 	int64 stroke = 1;
 }
+
+
+

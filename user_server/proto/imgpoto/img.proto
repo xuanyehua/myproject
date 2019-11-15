@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package go.micro.srv.user_server;
+
+
+service Img {
+    rpc Call(Request) returns (Response) {}
+}
+
+
+message Request {
+
+}
+
+message Response {
+    string msg = 1;
+    bytes pix = 2;
+    int64 stride = 3;
+    message Point{
+        int64 x =1;
+        int64 y =2;
+    }
+    Point min =4;
+    Point man =5;
+}
+
+

@@ -9,6 +9,7 @@ import (
 	_ "myproject/models"
 	"myproject/user_server/handler"
 	example "myproject/user_server/proto/example"
+	img "myproject/user_server/proto/imgpoto"
 	"myproject/user_server/subscriber"
 	_ "myproject/utils"
 )
@@ -26,6 +27,8 @@ func main() {
 	logs.Error("server test Error")
 	// Register Handler
 	err := example.RegisterExampleHandler(service.Server(), new(handler.Example))
+	fmt.Println(err)
+	err = img.RegisterImgHandler(service.Server(), new(handler.Img))
 	fmt.Println(err)
 	// Register Struct as Subscriber
 	err = micro.RegisterSubscriber("go.micro.srv.user_server", service.Server(), new(subscriber.Example))

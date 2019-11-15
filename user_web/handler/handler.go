@@ -4,11 +4,15 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/afocus/captcha"
+	"github.com/astaxie/beego/logs"
 	"github.com/micro/go-grpc"
+	image_api "image"
+	"image/png"
+	example "myproject/user_server/proto/example"
+	image "myproject/user_server/proto/imgpoto"
 	"net/http"
 	"time"
-
-	example "github.com/micro/examples/template/srv/proto/example"
 )
 
 func ExampleCall(w http.ResponseWriter, r *http.Request) {
@@ -43,5 +47,35 @@ func ExampleCall(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(response); err != nil {
 		http.Error(w, err.Error(), 500)
 		return
+	}
+}
+
+func ImageCall(w http.ResponseWriter, r *http.Request) {
+	//初始化grpc
+	server := grpc.NewService()
+	server.Init()
+	image_cli:=image.NewImgService("go.micro.srv.user_server",server.Client())
+
+	if r.Method == "GET" {
+		fmt.Println("get_img")
+		rsp,err :=image_cli.Call(context.TODO(),&image.Request{})
+		if err != nil{
+			logs.Error(err)
+			return
+		}
+		fmt.Println(rsp)
+		var image_new image_api.RGBA
+		image_new.Stride = int(rsp.Stride)
+		image_new.Rect.Min.X = int(rsp.Min.X)
+		image_new.Rect.Min.Y = int(rsp.Min.Y)
+		image_new.Rect.Max.Y = int(rsp.Man.Y)
+		image_new.Rect.Max.X = int(rsp.Man.X)
+		image_new.Pix = []uint8(rsp.Pix)
+		var image1 captcha.Image
+		image1.RGBA = &image_new
+		err = png.Encode(w,image1)
+		fmt.Println("++++++++",err)
+		logs.Info("ok")
+		logs.Error("aaaaaa")
 	}
 }
