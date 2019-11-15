@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50727
 File Encoding         : 65001
 
-Date: 2019-11-14 18:02:32
+Date: 2019-11-15 11:09:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,6 +49,29 @@ CREATE TABLE `rabc_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for rbac_group_role
+-- ----------------------------
+DROP TABLE IF EXISTS `rbac_group_role`;
+CREATE TABLE `rbac_group_role` (
+  `gr_id` int(11) NOT NULL,
+  `g_id` int(11) NOT NULL DEFAULT '0' COMMENT '组id',
+  `r_id` int(11) DEFAULT '0' COMMENT '角色id',
+  PRIMARY KEY (`gr_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for rbac_log
+-- ----------------------------
+DROP TABLE IF EXISTS `rbac_log`;
+CREATE TABLE `rbac_log` (
+  `log_id` int(11) NOT NULL,
+  `content` varchar(128) NOT NULL DEFAULT '' COMMENT '操作内容',
+  `u_id` int(11) NOT NULL DEFAULT '0' COMMENT '操作人',
+  `create_time` datetime NOT NULL COMMENT '操作时间',
+  PRIMARY KEY (`log_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for rbac_right
 -- ----------------------------
 DROP TABLE IF EXISTS `rbac_right`;
@@ -72,4 +95,15 @@ CREATE TABLE `rbac_role` (
   `update_time` datetime NOT NULL,
   `desc` varchar(128) NOT NULL DEFAULT '' COMMENT '角色描述',
   PRIMARY KEY (`r_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for rbac_role_right
+-- ----------------------------
+DROP TABLE IF EXISTS `rbac_role_right`;
+CREATE TABLE `rbac_role_right` (
+  `rr_id` int(11) NOT NULL DEFAULT '0',
+  `r_id` int(11) NOT NULL DEFAULT '0' COMMENT '角色id',
+  `ri_id` int(11) NOT NULL DEFAULT '0' COMMENT '权限id',
+  PRIMARY KEY (`rr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
