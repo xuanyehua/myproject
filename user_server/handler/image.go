@@ -8,6 +8,9 @@ import (
 	"image/color"
 	"io/ioutil"
 	img "myproject/user_server/proto/imgpoto"
+	"myproject/utils"
+	"strconv"
+	"time"
 )
 type Img struct {}
 
@@ -34,6 +37,20 @@ func(i *Img) Call(ctx context.Context, req *img.Request, rsp *img.Response) erro
 	if ioutil.WriteFile("a.png",data,0644) == nil {
 		fmt.Println("成功")
 	}
+	redis_cnn,err :=utils.Get_Redis()
+	if err != nil{
+		logs.Error(err)
+		return nil
+	}
+
+	err = redis_cnn.Put(strconv.FormatInt(req.Uuid,10),str,300*time.Second)
+	if err != nil{
+		logs.Error(err)
+		//fmt.Println(err)
+		return nil
+	}
 	return nil
+
+
 }
 

@@ -12,6 +12,7 @@ import (
 	example "myproject/user_server/proto/example"
 	image "myproject/user_server/proto/imgpoto"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -57,8 +58,12 @@ func ImageCall(w http.ResponseWriter, r *http.Request) {
 	image_cli:=image.NewImgService("go.micro.srv.user_server",server.Client())
 
 	if r.Method == "GET" {
+		err:=r.ParseForm()
 		fmt.Println("get_img")
-		rsp,err :=image_cli.Call(context.TODO(),&image.Request{})
+		fmt.Println(r.Form["uuid"][0])
+		//fmt.Println(reflect.TypeOf(r.Form["uuid"][0]))
+		uuid,err :=strconv.ParseInt(r.Form["uuid"][0],10,64)
+		rsp,err :=image_cli.Call(context.TODO(),&image.Request{Uuid:uuid})
 		if err != nil{
 			logs.Error(err)
 			return

@@ -56,7 +56,6 @@ func NewImgService(name string, c client.Client) ImgService {
 }
 
 func (c *imgService) Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	fmt.Println("aaaaaaaa")
 	req := c.c.NewRequest(c.name, "Img.Call", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
