@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package go.micro.srv.user_server;
+
+service Common {
+	rpc Call(Request) returns (Response) {}
+}
+
+message Request{
+       string data = 1;
+}
+
+
+message Response {
+	string msg = 1;
+	int64  code = 2;
+	string data = 3;
+}

@@ -31,6 +31,10 @@ func main() {
 
 	service.HandleFunc("/get_img", handler.ImageCall)
 
+	service.HandleFunc("/login", handler.LoginApi)
+
+
+
 
 	// run service
         if err := service.Run(); err != nil {

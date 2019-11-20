@@ -50,7 +50,5 @@ func(i *Img) Call(ctx context.Context, req *img.Request, rsp *img.Response) erro
 		return nil
 	}
 	return nil
-
-
 }
 

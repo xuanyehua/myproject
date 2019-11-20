@@ -23,17 +23,18 @@ func (t *RabcGroup) TableName() string {
 }
 
 type RabcUser struct {
-	Id            int       `orm:"column(u_id);pk" description:"用户id"`
-	GId           int       `orm:"column(g_id)" description:"分组id"`
-	LoginName     string    `orm:"column(login_name);size(64)" description:"登录名"`
-	Password      string    `orm:"column(password);size(64)" description:"密码"`
-	UserName      string    `orm:"column(user_name);size(64)" description:"用户名"`
-	Mobile        string    `orm:"column(mobile);size(20)" description:"手机号"`
-	Email         string    `orm:"column(email);size(64)" description:"邮箱"`
-	CreateTime    time.Time `orm:"column(create_time);type(datetime)"`
-	UpdateTime    time.Time `orm:"column(update_time);type(datetime)" description:"修改时间"`
-	LastLoginTime time.Time `orm:"column(last_login_time);type(datetime)"`
-	LoginCount    int       `orm:"column(login_count)" description:"登录次数"`
+	Id            int       `orm:"column(u_id);pk" description:"用户id" `
+	GId           int       `orm:"column(g_id)" description:"分组id" `
+	LoginName     string    `orm:"column(login_name);size(64)" description:"登录名" is_null:"fale" `
+	Password      string    `orm:"column(password);size(64)" description:"密码" is_null:"fale"`
+	UserName      string    `orm:"column(user_name);size(64)" description:"用户名" is_null:"fale"`
+	Mobile        string    `orm:"column(mobile);size(20)" description:"手机号" is_null:"fale"`
+	Email         string    `orm:"column(email);size(64)" description:"邮箱" is_null:"fale"`
+	Salt         string    `orm:"column(salt);size(11)" description:"盐" is_null:"fale"`
+	CreateTime    time.Time `orm:"column(create_time);type(datetime)" is_null:"fale"`
+	UpdateTime    time.Time `orm:"column(update_time);type(datetime)" description:"修改时间" is_null:"fale"`
+	LastLoginTime time.Time `orm:"column(last_login_time);type(datetime)" is_null:"fale"`
+	LoginCount    int       `orm:"column(login_count)" description:"登录次数" is_null:"fale"`
 }
 
 func (t *RabcUser) TableName() string {

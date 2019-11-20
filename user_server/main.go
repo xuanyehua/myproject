@@ -8,6 +8,7 @@ import (
 	"github.com/micro/go-micro"
 	_ "myproject/models"
 	"myproject/user_server/handler"
+	common "myproject/user_server/proto/common"
 	example "myproject/user_server/proto/example"
 	img "myproject/user_server/proto/imgpoto"
 	"myproject/user_server/subscriber"
@@ -29,6 +30,8 @@ func main() {
 	err := example.RegisterExampleHandler(service.Server(), new(handler.Example))
 	fmt.Println(err)
 	err = img.RegisterImgHandler(service.Server(), new(handler.Img))
+	fmt.Println(err)
+	err = common.RegisterCommonHandler(service.Server(), new(handler.Login))
 	fmt.Println(err)
 	// Register Struct as Subscriber
 	err = micro.RegisterSubscriber("go.micro.srv.user_server", service.Server(), new(subscriber.Example))

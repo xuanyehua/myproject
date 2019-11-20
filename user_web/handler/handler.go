@@ -9,6 +9,8 @@ import (
 	"github.com/micro/go-grpc"
 	image_api "image"
 	"image/png"
+	"io/ioutil"
+	common "myproject/user_server/proto/common"
 	example "myproject/user_server/proto/example"
 	image "myproject/user_server/proto/imgpoto"
 	"net/http"
@@ -82,5 +84,37 @@ func ImageCall(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("++++++++",err)
 		logs.Info("ok")
 		logs.Error("aaaaaa")
+	}
+}
+
+func LoginApi(w http.ResponseWriter, r *http.Request) {
+	server := grpc.NewService()
+	server.Init()
+	common_cli := common.NewCommonService("go.micro.srv.user_server",server.Client())
+	if r.Method == "POST"{
+		//var post_param map[string]interface{}
+		body,_ := ioutil.ReadAll(r.Body)
+		//fmt.Println(string(body))
+		rep,err :=common_cli.Call(context.TODO(),&common.Request{Data:string(body)})
+		if err != nil{
+			logs.Error(err)
+		}
+		fmt.Println(rep)
+		var data map[string]interface{}
+		data = make(map[string]interface{})
+		data["code"] = rep.Code
+		data["data"] = rep.Data
+		data["msg"] = rep.Msg
+		post_data,err := json.Marshal(data)
+		if err != nil{
+			logs.Error(err)
+			return
+		}
+		_,err =fmt.Fprint(w,string(post_data))
+		if err != nil{
+			logs.Error(err)
+			return
+		}
+
 	}
 }
