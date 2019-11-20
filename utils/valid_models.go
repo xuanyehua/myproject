@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"reflect"
 )
 
@@ -14,12 +15,13 @@ func (v*Valid_models) Valid_Models(data map[string]interface{},model interface{}
 		a:=st.Field(i)
 		//fmt.Println(st.Field(i).Name)
 		//fmt.Println(a)
-		if a.Tag.Get("is_null") == "fale"{
+		if a.Tag.Get("is_null") == "false"{
+				fmt.Println(a.Tag.Get("json"))
 				_,ok:=data[st.Field(i).Name]
-				if ok == false {
+				_,ok1:= data[a.Tag.Get("json")]
+				if ok == false && ok1 == false{
 					return "缺少"+st.Field(i).Name
 				}
-
 		}
 
 	}

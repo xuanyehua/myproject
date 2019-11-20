@@ -23,18 +23,18 @@ func (t *RabcGroup) TableName() string {
 }
 
 type RabcUser struct {
-	Id            int       `orm:"column(u_id);pk" description:"用户id" `
-	GId           int       `orm:"column(g_id)" description:"分组id" `
-	LoginName     string    `orm:"column(login_name);size(64)" description:"登录名" is_null:"fale" `
-	Password      string    `orm:"column(password);size(64)" description:"密码" is_null:"fale"`
-	UserName      string    `orm:"column(user_name);size(64)" description:"用户名" is_null:"fale"`
-	Mobile        string    `orm:"column(mobile);size(20)" description:"手机号" is_null:"fale"`
-	Email         string    `orm:"column(email);size(64)" description:"邮箱" is_null:"fale"`
-	Salt         string    `orm:"column(salt);size(11)" description:"盐" is_null:"fale"`
-	CreateTime    time.Time `orm:"column(create_time);type(datetime)" is_null:"fale"`
-	UpdateTime    time.Time `orm:"column(update_time);type(datetime)" description:"修改时间" is_null:"fale"`
-	LastLoginTime time.Time `orm:"column(last_login_time);type(datetime)" is_null:"fale"`
-	LoginCount    int       `orm:"column(login_count)" description:"登录次数" is_null:"fale"`
+	Id            int       `orm:"column(u_id);pk" description:"用户id" json:"u_id" `
+	GId           int       `orm:"column(g_id)" description:"分组id" json:"g_id"`
+	LoginName     string    `orm:"column(login_name);size(64)" description:"登录名" json:"login_name" is_null:"false"`
+	Password      string    `orm:"column(password);size(64)" description:"密码" json:"password" is_null:"false"`
+	UserName      string    `orm:"column(user_name);size(64)" description:"用户名" json:"user_name" is_null:"false"`
+	Mobile        string    `orm:"column(mobile);size(20)" description:"手机号" json:"mobile" is_null:"false"`
+	Email         string    `orm:"column(email);size(64)" description:"邮箱" json:"email" is_null:"false"`
+	Salt         string    `orm:"column(salt);size(11)" description:"盐" json:"salt" is_null:"false"`
+	CreateTime    time.Time `orm:"column(create_time);type(datetime)" json:"create_time" is_null:"false"`
+	UpdateTime    time.Time `orm:"column(update_time);type(datetime)" description:"修改时间" json:"update_time" is_null:"false"`
+	LastLoginTime time.Time `orm:"column(last_login_time);type(datetime)" json:"last_login_time" is_null:"false"`
+	LoginCount    int       `orm:"column(login_count)" description:"登录次数" json:"login_count" is_null:"false"`
 }
 
 func (t *RabcUser) TableName() string {
