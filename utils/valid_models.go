@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"fmt"
+	"github.com/astaxie/beego/orm"
 	"reflect"
 )
 
@@ -13,18 +13,25 @@ func (v*Valid_models) Valid_Models(data map[string]interface{},model interface{}
 	st := reflect.TypeOf(model)
 	for i := 0; i < st.NumField(); i++ {
 		a:=st.Field(i)
-		//fmt.Println(st.Field(i).Name)
-		//fmt.Println(a)
 		if a.Tag.Get("is_null") == "false"{
-				fmt.Println(a.Tag.Get("json"))
 				_,ok:=data[st.Field(i).Name]
 				_,ok1:= data[a.Tag.Get("json")]
 				if ok == false && ok1 == false{
 					return "缺少"+st.Field(i).Name
 				}
 		}
-
+		if a.Tag.Get("only") == "true" {
+			b:=v.Valid_Only(st.Field(i).Name,data[a.Tag.Get("json")],model)
+			if b == true{
+				return st.Field(i).Name+"已存在"
+			}
+		}
 	}
 	return ""
 }
 
+func (v*Valid_models) Valid_Only(field string,value interface{},model interface{}) bool{
+	o := orm.NewOrm()
+	a :=o.QueryTable("rabc_user").Filter(field,value).Exist()
+	return a
+}

@@ -10,6 +10,7 @@ import (
 	common "myproject/user_server/proto/common"
 	"myproject/user_server/utils"
 	utils2 "myproject/utils"
+	"regexp"
 	"time"
 )
 
@@ -44,7 +45,57 @@ func (l *Login) Call(ctx context.Context, req *common.Request, rsp *common.Respo
 			return nil
 		}
 	}
-	fmt.Println(data)
+	login_name := data["login_name"].(string)
+	if len(login_name) == 0 {
+		rsp.Data = ""
+		rsp.Code = 400
+		rsp.Msg = "login_name为空"
+		return nil
+	}
+	password := data["password"].(string)
+	if len(password) < 6 {
+		rsp.Data = ""
+		rsp.Code = 400
+		rsp.Msg = "password不能少于六位"
+		return nil
+	}
+	mobile := data["mobile"].(string)
+	mobile_bool,err := regexp.MatchString(`^1([38][0-9]|14[579]|5[^4]|16[6]|7[1-35-8]|9[189])\d{8}$`,mobile)
+	if err != nil{
+		logs.Error(err)
+		rsp.Data = ""
+		rsp.Code = 400
+		rsp.Msg = "电话号码出错"
+		return nil
+	}
+	if mobile_bool == false{
+		rsp.Data = ""
+		rsp.Code = 400
+		rsp.Msg = "号码有误"
+		return nil
+	}
+	redis_cnn,err :=utils2.Get_Redis()
+	if err != nil{
+		logs.Error(err)
+		return nil
+	}
+
+	b :=redis_cnn.Get(data["uuid"].(string))
+	var uuid string
+	if b != nil{
+		uuid = string(b.([]byte))
+	}else {
+		rsp.Data = ""
+		rsp.Code = 400
+		rsp.Msg = "获取验证码错误"
+		return nil
+	}
+	if uuid != data["verification"].(string){
+		rsp.Data = ""
+		rsp.Code = 400
+		rsp.Msg = "验证码错误"
+		return nil
+	}
 	var p utils.Password
 	md5_psw,salt:=p.Encode_Password(data["password"].(string))
 	var user models.RabcUser

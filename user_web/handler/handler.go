@@ -115,6 +115,11 @@ func LoginApi(w http.ResponseWriter, r *http.Request) {
 			logs.Error(err)
 			return
 		}
+	}
+	if r.Method == "PUT"{
+		fmt.Println("put")
 
 	}
 }
+
+
